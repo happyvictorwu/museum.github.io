@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>生成二维码</title>
+  <!-- 引入QRCode.js库 -->
+  <script src="https://cdn.staticfile.org/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div id="qrcode"></div>
+  <input type="text" id="urlInput" placeholder="输入网站URL" value="https://www.bilibili.com/video/BV1xm4y1W798/?spm_id_from=333.999.0.0&vd_source=63096b886dd7f21b53206f87d79af97a">
+  <button onclick="startGenerating()">开始生成</button>
+  <button onclick="stopGenerating()">停止生成</button>
+  <br>
+  <script>
+    var intervalId; // 定时器ID
+    var qrcodeContainer = document.getElementById("qrcode");
+    var qrcode;
+
+    function generateQRCode() {
+      // 获取输入框中的URL
+      var url = document.getElementById("urlInput").value;
+      // 清空二维码容器中的内容
+      qrcodeContainer.innerHTML = '';
+      // 创建新的二维码实例
+      qrcode = new QRCode(qrcodeContainer, {
+        text: url,
+        width: 128,
+        height: 128
+      }); 
+    }
+
+    function startGenerating() {
+      generateQRCode(); // 首次生成二维码
+      intervalId = setInterval(generateQRCode, 2000); // 每2秒更新一次二维码
+    }
+
+    function stopGenerating() {
+      clearInterval(intervalId); // 停止定时器
+    }
+
+    // 页面加载完成后自动生成二维码
+    window.onload = startGenerating;
+  </script>
+</body>
+</html>
